@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project-1</title>
+
+    <style>
+        input[type="text"],
+        input[type="password"] {
+            width: 300px;
+            height: 30px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            padding: 5px;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ccff66;
+        }
+
+        .container {
+            background: white;
+            padding: 25px 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .container:hover {
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .title {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .head {
+            font-family: Arial, sans-serif;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .btn {
+            background-color: grey;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn:disabled {
+            background-color: #aaa;
+            cursor: not-allowed;
+        }
+
+        .password-box {
+            display: flex;
+            align-items: center;
+        }
+
+        #toggleBtn {
+            margin-left: 10px;
+            padding: 6px 10px;
+            border: none;
+            background-color: grey;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            height: 30px;
+        }
+
+        .sbtn {
+            margin-bottom: 11px;
+        }
+
+        .name-error,
+        .mail-error,
+        .Pass-error {
+            color: red;
+            font-size: 14px;
+            display: none;
+            margin-bottom: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <!-- Heading section -->
+        <h1 class="title">Registration Form</h1>
+
+        <!-- form section -->
+        <form id="myForm">
+
+            <h3 class="head">Name :</h3>
+            <input type="text" id="name" placeholder="Enter Name....">
+            <span class="name-error">*Name cannot be empty.</span>
+
+            <h3 class="head">E-mail :</h3>
+            <input type="text" id="email" placeholder="Enter E-mail....">
+            <span class="mail-error">*Enter a valid email address.</span>
+
+            <h3 class="head">Password :</h3>
+            <div class="password-box">
+                <input type="password" id="password" placeholder="Enter Password....">
+                <button type="button" id="toggleBtn" class="sbtn">Show</button>
+            </div>
+            <span class="Pass-error">*Password must be at least 6 characters.</span>
+
+            <button type="submit" id="sub" class="btn" disabled>Submit</button>
+
+        </form>
+
+    </div>
+
+
+    <!-- Script section -->
+
+    <script>
+        const nameInput = document.getElementById("name");
+        const emailInput = document.getElementById("email");
+        const passwordInput = document.getElementById("password");
+        const submitBtn = document.getElementById("sub");
+
+        const nameError = document.querySelector(".name-error");
+        const mailError = document.querySelector(".mail-error");
+        const passError = document.querySelector(".Pass-error");
+
+        function validateForm() {
+            let isValid = true;
+
+            // Name validation
+            if (nameInput.value.trim() === "") {
+                nameError.style.display = "block";
+                isValid = false;
+            } else {
+                nameError.style.display = "none";
+            }
+
+            // Email validation
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(emailInput.value.trim())) {
+                mailError.style.display = "block";
+                isValid = false;
+            } else {
+                mailError.style.display = "none";
+            }
+
+            // Password validation
+            if (passwordInput.value.length < 6) {
+                passError.style.display = "block";
+                isValid = false;
+            } else {
+                passError.style.display = "none";
+            }
+
+            submitBtn.disabled = !isValid;
+        }
+
+        nameInput.addEventListener("input", validateForm);
+        emailInput.addEventListener("input", validateForm);
+        passwordInput.addEventListener("input", validateForm);
+
+        // Show / Hide password
+        const toggleBtn = document.getElementById("toggleBtn");
+        toggleBtn.addEventListener("click", function () {
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                toggleBtn.innerText = "Hide";
+            } else {
+                passwordInput.type = "password";
+                toggleBtn.innerText = "Show";
+            }
+        });
+
+        // Prevent form reload
+        document.getElementById("myForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+            alert("Form submitted successfully!");
+        });
+    </script>
+
+</body>
+
+</html>
